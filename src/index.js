@@ -7,36 +7,9 @@
 // - Clean UI (View all projects, view idividual todos, color code priorities, expand individual todo, delete todo)
 // - localStorage
 
-import './style.css';
+import { toDoEls } from "./elements";
+import { toDoLists } from "./scripts";
 
-const todoLists = (() => {
-    // project factory
-    const Project = (title, category) => {
-        const emptyProject = [];
-        let currentProject = [];
-        const getTitle = () => title;
-        const getCategory = () => category;
-    }
-
-    // todo factory
-    const TODO = (title, des, dueDate, priority, checkStatus) => {
-        const getTitle = () => title;
-        const getDes = () => des;
-        const getDueDate = () => dueDate;
-        const getPriority = () => priority;
-        const getCheckStatus = () => checkStatus;
-    }
-})();
-
-const todoEls = (() => {
-    const initPage = () => {
-        const mainContainer = document.createElement('div');
-        mainContainer.classList.add('main-container');
-        document.body.appendChild(mainContainer);
-    }
-   
-    
-    window.onload = () => {
-        initPage();
-    }
-})();
+window.onload = () => {
+    toDoEls.initPage();
+}
