@@ -4,7 +4,7 @@ import '@fortawesome/fontawesome-free/js/fontawesome'
 import '@fortawesome/fontawesome-free/js/solid'
 import '@fortawesome/fontawesome-free/js/regular'
 import '@fortawesome/fontawesome-free/js/brands'
-import { toDoLists } from './objects';
+import { scripts } from './script';
 
 const toDoEls = (() => {
     // when app opens
@@ -34,15 +34,24 @@ const toDoEls = (() => {
 
         const headerTitle = document.createElement('h1');
         headerTitle.classList.add('header-title');
-        headerTitle.innerHTML = 'What do you have planned for today?';
+        headerTitle.innerHTML = 'What do you have planned?';
 
+        const headerRight = document.createElement('div');
+        headerRight.classList.add('header-right');
+        
         const addIcon = document.createElement('a');
-        addIcon.classList.add('header-right');
         addIcon.innerHTML = '<i class="fas fa-plus"></i>';
+        headerRight.appendChild(addIcon);
+
+        addIcon.addEventListener('click', () => {
+            if (document.querySelector('.dropdown') === null) {
+                scripts.addDropDown();
+            }
+        });
 
         header.appendChild(homeIcon);
         header.appendChild(headerTitle);
-        header.appendChild(addIcon);
+        header.appendChild(headerRight);
 
 
         return header;

@@ -6,6 +6,8 @@
 
 :root {
     --primary-text: white;
+    --primary-background: rgb(6, 156, 6);
+    --secondary-background: rgb(14, 105, 14);
 }
 
 *,
@@ -44,11 +46,10 @@ body {
     left: 0;
     width: 100%;
     height: 50px;
-    background-color: rgb(6, 156, 6);
+    background-color: var(--primary-background);
     color: var(--primary-text);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    overflow: hidden;
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
     align-items: center;
@@ -83,6 +84,30 @@ body {
     font-size: 25px;
 }
 
+.dropdown {
+    position: absolute;
+    top: 3.1rem;
+    right: 0;
+    width:  15%;
+    background-color: var(--secondary-background);
+    border: 2px solid rgba(6, 156, 6, 0.137);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.dropdown p {
+    padding: .2rem;
+    border: 1px solid rgba(6, 156, 6, 0.137);
+}
+
+.dropdown p:hover {
+    font-size: 1.2rem;
+}
+
 .content-container {
     position: absolute;
     top: 50px;
@@ -101,14 +126,39 @@ body {
 }
 
 .project-column-title {
-    text-align: center;
+    text-align: left;
     font-weight: bold;
     border-bottom: 2px solid rgba(128, 128, 128, 0.246);
+    padding: .4rem;
 }
 
 .project {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    padding: .3rem;
+    gap: 1rem;
+}
+
+.new-project {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.new-project input {
+    width: 5rem;
+}
+
+.fa-arrow-circle-up {
+    font-size: 1.3rem;
+    color: var(--primary-background);
+    cursor: pointer;
+}
+
+.delete-project {
+    
 }
 
 .todo-column {
@@ -120,7 +170,6 @@ body {
 .todo-title {
     text-align: start;
     font-weight: bold;
-
 }
 
 .todo {
@@ -164,9 +213,10 @@ body {
     align-items: center;
     gap: 10px;
     font-size:20px;
-    background-color: rgb(6, 156, 6);
+    background-color: var(--primary-background);
     color: var(--primary-text);
     border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     border-bottom: 10px;
     overflow: hidden;
 }
