@@ -1,12 +1,12 @@
-const toDoLists = (() => {
-    // array that holds all projects
-    const allProjects = [];
+const objects = (() => {
     // project factory
     const Project = (title, category) => {
-        const emptyProject = [];
-        let currentProject = [];
         const getTitle = () => title;
-        const getCategory = () => category;
+        const currentProject = []
+        return {
+            getTitle,
+            currentProject
+        }
     }
 
     // todo factory
@@ -16,7 +16,20 @@ const toDoLists = (() => {
         const getDueDate = () => dueDate;
         const getPriority = () => priority;
         const getCheckStatus = () => checkStatus;
+
+        return {
+            getTitle,
+            getDes,
+            getDueDate,
+            getPriority,
+            getCheckStatus
+        }
+    }
+
+    return {
+        Project,
+        TODO
     }
 })();
 
-export {toDoLists};
+export {objects};
