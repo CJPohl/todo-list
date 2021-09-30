@@ -1,16 +1,10 @@
 // TODO:
-// - Edit logic for both projects and todo
-// - Sepearate app logic vs DOM logic
-// - Clean UI (View all projects, view idividual todos, color code priorities, expand individual todo, delete todo)
 // - localStorage
 
-import { toDoEls } from "./elements";
-import { objects, scripts } from "./script";
-
-
-
+import { staticEls } from "./elements";
+import { scripts } from "./script";
 
 window.onload = () => {
-    toDoEls.initPage();
+    staticEls.initPage();
     scripts.renderContent();
 }

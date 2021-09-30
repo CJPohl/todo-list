@@ -6,8 +6,8 @@ import '@fortawesome/fontawesome-free/js/regular'
 import '@fortawesome/fontawesome-free/js/brands'
 import { scripts } from './script';
 
-const toDoEls = (() => {
-    // when app opens
+const staticEls = (() => {
+    // Static content
     const initPage = () => {
         const mainContainer = document.createElement('div');
         mainContainer.classList.add('main-container');
@@ -20,7 +20,6 @@ const toDoEls = (() => {
         mainContainer.appendChild(header);
         mainContainer.appendChild(contentContainer);
         mainContainer.appendChild(footer);
-
     }
 
     const createHeader = () => {
@@ -34,7 +33,7 @@ const toDoEls = (() => {
 
         const headerTitle = document.createElement('h1');
         headerTitle.classList.add('header-title');
-        headerTitle.innerHTML = 'What do you have planned?';
+        headerTitle.innerHTML = 'Todo List';
 
         const headerRight = document.createElement('div');
         headerRight.classList.add('header-right');
@@ -46,7 +45,7 @@ const toDoEls = (() => {
         homeIcon.addEventListener('click', scripts.returnDefault);
 
         addIcon.addEventListener('click', () => {
-            if (document.querySelector('.dropdown') === null) {
+            if ((document.querySelector('.dropdown') === null ) && (document.querySelector('.edit-box') === null) && (document.querySelector('.new-todo') === null) && (document.querySelector('.new-project') === null)) {
                 scripts.addDropDown();
             }
         });
@@ -85,7 +84,7 @@ const toDoEls = (() => {
 
         const toDoTitle = document.createElement('div');
         toDoTitle.classList.add('column-title');
-        toDoTitle.innerHTML = '<h2>Todo</h2>';
+        toDoTitle.innerHTML = '<h2 id="todo-column-title">Todo</h2>';
 
         const toDoContainer = document.createElement('div');
         toDoContainer.classList.add('todo-container');
@@ -122,4 +121,4 @@ const toDoEls = (() => {
     };
 })();
 
-export {toDoEls};
+export {staticEls};
