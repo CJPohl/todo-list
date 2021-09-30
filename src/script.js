@@ -1,28 +1,23 @@
 const objects = (() => {
     // project factory
-    const Project = (title, category) => {
-        const getTitle = () => title;
+    const Project = (title) => {
         const currentProject = []
         return {
-            getTitle,
+            title,
             currentProject
         }
     }
 
     // todo factory
     const TODO = (title, des, dueDate, priority, checkStatus) => {
-        const getTitle = () => title;
-        const getDes = () => des;
-        const getDueDate = () => dueDate;
-        const getPriority = () => priority;
-        const getCheckStatus = () => checkStatus;
-
+         
+        
         return {
-            getTitle,
-            getDes,
-            getDueDate,
-            getPriority,
-            getCheckStatus
+            title,
+            des,
+            dueDate,
+            priority,
+            checkStatus,
         }
     }
 
@@ -35,12 +30,12 @@ const objects = (() => {
 const scripts = (() => {
     let projectsArray = [];
     
-    const emptyProject = [];
-
-   
-
-    const randomProject1 = objects.Project('Coding', 'Work');
-    const randomProject2 = objects.Project('Lego', 'Fun');
+    const DEFAULT_PROJECT = objects.Project('Default');
+    projectsArray.push(DEFAULT_PROJECT);
+    let projectChoice = DEFAULT_PROJECT;
+    
+    const randomProject1 = objects.Project('Coding');
+    const randomProject2 = objects.Project('Lego');
 
     const todo1 = objects.TODO('Feed the Cats', 'Give the cats food', 'Tomorrow', false, false );
     const todo2 = objects.TODO('Feed asdfthe Cats', 'Give thasdfe cats food', 'Tomorrow', false, false );
@@ -48,86 +43,107 @@ const scripts = (() => {
     projectsArray.push(randomProject1);
     projectsArray.push(randomProject2);
 
-    randomProject1.currentProject.push(todo1);
-    randomProject1.currentProject.push(todo2);
+    for (let i=0; i<2; i++) {
+        projectsArray.push(randomProject1);
+        projectsArray.push(randomProject2);
+        randomProject1.currentProject.push(todo1);
+        randomProject1.currentProject.push(todo2); 
+    };
+    
+   
 
-    const DEFAULT_PROJECT = projectsArray[0];
-    let projectChoice = DEFAULT_PROJECT;
 
-
+    const renderContent = () => {
+        _renderProjects();
+        _renderToDos();
+    }
+    
     // for all projects in project array, render to screen
-    const renderProjects = () => {
+    const _renderProjects = () => {
         const projectContainer = document.querySelector('.project-container');
         projectContainer.innerHTML = '';
 
         for (let i=0; i<projectsArray.length; i++) {
             const project = document.createElement('div');
             project.classList.add('project');
-            project.setAttribute('id', `${i}`);
+            //project.setAttribute('id', `${i}`);
             project.innerHTML = `
-            <div class="project-left">
-                <p>${projectsArray[i].getTitle()}</p>
+            <div id="${i}" class="project-left">
+                <p>${projectsArray[i].title}</p>
             </div>
-            <div class="project-right">
+            <div id="${i}" class="project-right">
+                <div><a name="edit-project"><i class="fas fa-edit"></i></a></div>
                 <div><a name="delete-project"><i class="fas fa-times"></i></a></div>
             </div>
             `;
 
             projectContainer.appendChild(project);
-
-            project.addEventListener('click', _chooseProject);
-            
-            const deleteProjects = document.getElementsByName('delete-project');
-            deleteProjects.forEach(del => del.addEventListener('click', _deleteProject));
         }
         
+        const projectLefts = document.querySelectorAll('.project-left');
+        projectLefts.forEach(left => left.addEventListener('click', _chooseProject));
+        
+        const deleteProjects = document.getElementsByName('delete-project');
+        deleteProjects.forEach(del => del.addEventListener('click', _deleteProject));
     }
 
-    const renderToDos = () => {
+    const _renderToDos = () => {
         const toDoContainer = document.querySelector('.todo-container');
         toDoContainer.innerHTML = '';
         let chosenProject = _isDefaultProject();
-       
-        for (let i=0; i<chosenProject.currentProject.length; i++) {
-            let checkStatus;
-            let priorityStatus;
 
-            const todo = document.createElement('div');
-            todo.classList.add('todo');
-            todo.setAttribute('id', `${i}`);
-            
-            if (chosenProject.currentProject[i].getCheckStatus() === false) {
-                checkStatus = "far fa-circle";
-            }
-            else {
-                checkStatus = "fas fa-circle";
-            }
-            
-            if (chosenProject.currentProject[i].getPriority() === false) {
-                priorityStatus = "fas fa-bell-slash";
-            }
-            else {
-                priorityStatus = "fas fa-bell";
-            }
-            
-            todo.innerHTML = `
-            <div class="todo-left">
-                <div><i class="${checkStatus}"></i></div>
-                <p class="todo-main-text">${chosenProject.currentProject[i].getTitle()}</p>
-                <p class="todo-faded-text">${chosenProject.currentProject[i].getDueDate()}</p>
-                <p class="todo-main-text">${chosenProject.currentProject[i].getDes()}</p>
-                <div><i class="${priorityStatus}"></i></div>
-            </div>
-            <div class="todo-right">
-            <div><a name="delete-todo"><i class="fas fa-times"></i></a></div>
-            </div>
-            `;
+        let checkStatus;
+        let priorityStatus;
 
-            toDoContainer.appendChild(todo);
+        if (projectsArray.length === 0) {
+            toDoContainer.innerHTML = '';
+        }
+        else {
+            for (let i=0; i<chosenProject.currentProject.length; i++) {
+                const todo = document.createElement('div');
+                todo.classList.add('todo');
+                todo.setAttribute('id', `${i}`);
+                
+                if (chosenProject.currentProject[i].checkStatus === false) {
+                    checkStatus = "far fa-circle";
+                }
+                else {
+                    checkStatus = "fas fa-circle";
+                }
+                
+                if (chosenProject.currentProject[i].priority === false) {
+                    priorityStatus = "fas fa-bell-slash";
+                    console.log('hi');
+                }
+                else {
+                    priorityStatus = "fas fa-bell";
+                    console.log('sup');
+                }
+                
+                todo.innerHTML = `
+                <div class="todo-left">
+                    <div><i class="${checkStatus}"></i></div>
+                    <p class="todo-title-text">${chosenProject.currentProject[i].title}</p>
+                    <p class="todo-faded-text">${chosenProject.currentProject[i].dueDate}</p>
+                    <p class="todo-des-text">${chosenProject.currentProject[i].des}</p>
+                    <div><a id="${i}" name="priority-todo"><i class="${priorityStatus}"></i></a></div>
+                </div>
+                <div class="todo-right">
+                    <div><a name="edit-todo"><i class="fas fa-edit"></i></a></div>
+                    <div><a name="delete-todo"><i class="fas fa-times"></i></a></div>
+                </div>
+                `;
 
-            
+                toDoContainer.appendChild(todo);
+
+                
+            }   
         }
         
+        // add event listerns for priority button
+        const bells = document.getElementsByName('priority-todo');
+        bells.forEach(bell => bell.addEventListener('click', _changePriority));
+
         // add event listeners for todo deletes
         const deleteTodos = document.getElementsByName('delete-todo');
         deleteTodos.forEach(del => del.addEventListener('click', _deleteTodo));
@@ -164,8 +180,12 @@ const scripts = (() => {
 
     const _chooseProject = (e) => {
         projectChoice = e.currentTarget.id;
-        renderToDos();
-        
+        renderContent();
+    }
+
+    const returnDefault = () => {
+        projectChoice = DEFAULT_PROJECT;
+        renderContent();
     }
 
     const _addProject = () => {
@@ -188,15 +208,14 @@ const scripts = (() => {
             projectsArray.push(project);
             newProject.remove();
 
-            renderProjects();
+            renderContent();
         })
     }
 
     const _deleteProject = (e) => { // fix elements for event lsiterns
-        const toDelete = e.currentTarget.parentElement.parentElement.parentElement;
+        const toDelete = e.currentTarget.parentElement.parentElement.id;
         projectsArray.splice(toDelete, 1)
-
-        renderProjects();
+        renderContent();
     }
 
 
@@ -225,8 +244,24 @@ const scripts = (() => {
             chosenProject.currentProject.push(todo);
             newToDo.remove();
 
-            renderToDos();
+            renderContent();
         });
+    }
+
+    const _changePriority = (e) => {
+        let chosenProject = _isDefaultProject();
+        const toChange = e.currentTarget.id
+        const priorityBool = chosenProject.currentProject[toChange].priority;
+
+        if (priorityBool === false) {
+            chosenProject.currentProject[toChange].priority = true;
+        }
+        else{
+            chosenProject.currentProject[toChange].priority = false;
+            console.log('asdf');
+        }
+
+        renderContent();
     }
 
     const _deleteTodo = (e) => {
@@ -234,7 +269,7 @@ const scripts = (() => {
         const toDelete = e.target.parentElement.parentElement.parentElement.parentElement.id;
         chosenProject.currentProject.splice(toDelete, 1);
 
-        renderToDos();
+        renderContent();
     }
 
     const _isDefaultProject = () => {
@@ -252,9 +287,9 @@ const scripts = (() => {
     
 
     return {
-        renderProjects,
-        renderToDos,
-        addDropDown
+        renderContent,
+        addDropDown,
+        returnDefault
     }
 
     

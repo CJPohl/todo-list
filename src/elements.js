@@ -43,6 +43,8 @@ const toDoEls = (() => {
         addIcon.innerHTML = '<i class="fas fa-plus"></i>';
         headerRight.appendChild(addIcon);
 
+        homeIcon.addEventListener('click', scripts.returnDefault);
+
         addIcon.addEventListener('click', () => {
             if (document.querySelector('.dropdown') === null) {
                 scripts.addDropDown();
@@ -68,7 +70,7 @@ const toDoEls = (() => {
         projectColumn.classList.add('project-column');
 
         const projectColumnTitle = document.createElement('div');
-        projectColumnTitle.classList.add('project-column-title');
+        projectColumnTitle.classList.add('column-title');
         projectColumnTitle.innerHTML = '<h2>Projects</h2>';
 
         const projectContainer = document.createElement('div');
@@ -82,8 +84,8 @@ const toDoEls = (() => {
         toDoColumn.classList.add('todo-column');
 
         const toDoTitle = document.createElement('div');
-        toDoTitle.classList.add('todo-title');
-        toDoTitle.innerHTML = '<h3>Todo</h3>';
+        toDoTitle.classList.add('column-title');
+        toDoTitle.innerHTML = '<h2>Todo</h2>';
 
         const toDoContainer = document.createElement('div');
         toDoContainer.classList.add('todo-container');

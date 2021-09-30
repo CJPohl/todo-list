@@ -12,6 +12,5 @@ import { objects, scripts } from "./script";
 
 window.onload = () => {
     toDoEls.initPage();
-    scripts.renderProjects();
-    scripts.renderToDos();
+    scripts.renderContent();
 }
