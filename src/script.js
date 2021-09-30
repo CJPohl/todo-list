@@ -63,9 +63,14 @@ const scripts = (() => {
         for (let i=0; i<projectsArray.length; i++) {
             const project = document.createElement('div');
             project.classList.add('project');
+            project.setAttribute('id', `${i}`);
             project.innerHTML = `
-            <p id="${i}">${projectsArray[i].getTitle()}</p>
-            <a name="delete-project"><i class="fas fa-times"></i></a>
+            <div class="project-left">
+                <p>${projectsArray[i].getTitle()}</p>
+            </div>
+            <div class="project-right">
+                <div><a name="delete-project"><i class="fas fa-times"></i></a></div>
+            </div>
             `;
 
             projectContainer.appendChild(project);
@@ -158,8 +163,9 @@ const scripts = (() => {
     }
 
     const _chooseProject = (e) => {
-        projectChoice = e.target.id;
+        projectChoice = e.currentTarget.id;
         renderToDos();
+        
     }
 
     const _addProject = () => {
@@ -187,7 +193,10 @@ const scripts = (() => {
     }
 
     const _deleteProject = (e) => { // fix elements for event lsiterns
-        console.log(e.target);
+        const toDelete = e.currentTarget.parentElement.parentElement.parentElement;
+        projectsArray.splice(toDelete, 1)
+
+        renderProjects();
     }
 
 
