@@ -1,3 +1,5 @@
+import { lS } from "./ls";
+
 const objects = (() => {
     // project factory
     const Project = (title) => {
@@ -30,17 +32,33 @@ const objects = (() => {
 const scripts = (() => {
     // main project array
     let projectsArray = [];
-    
-    // create default project that appears on startup
+    let projectChoice;
+
     const DEFAULT_PROJECT = objects.Project('Default');
-    projectsArray.push(DEFAULT_PROJECT);
-    let projectChoice = DEFAULT_PROJECT;
+    
+    // create default project that appears on startup if no localStorage
+    if (projectsArray.length === 0) {
+        projectsArray.push(DEFAULT_PROJECT);
+        projectChoice = DEFAULT_PROJECT;
+    }
+    
+    else {
+        projectChoice = projectsArray[0];
+    }
+    
    
+    // parse localStorage JSON before rendering content
+    const updatePArray = () => {
+        const storedProjects = lS.parseLS();
+        projectsArray = storedProjects;
+    }
+    
     // render all dynamic content
     const renderContent = () => {
         _renderTitle();
         _renderProjects();
         _renderTodos();
+        lS.updateLS(projectsArray);
     }
 
     // render todo column title
@@ -152,6 +170,7 @@ const scripts = (() => {
     const _addTodoListeners = () => {
         const statuses = document.getElementsByName('status');
         statuses.forEach(stat => stat.addEventListener('click', _changeStatus));
+        
         
         const bells = document.getElementsByName('priority-todo');
         bells.forEach(bell => bell.addEventListener('click', _changePriority));
@@ -428,6 +447,7 @@ const scripts = (() => {
     }
     
     return {
+        updatePArray,
         renderContent,
         addDropDown,
         returnDefault
