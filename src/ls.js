@@ -1,18 +1,18 @@
 const lS = (() => {
-    const updateLS = (projectsArray)  => {
-        localStorage.setItem('projects', JSON.stringify(projectsArray));
-    }
+  const updateLS = (projectsArray) => {
+    localStorage.setItem('projects', JSON.stringify(projectsArray));
+  };
 
-    const parseLS = () => {
-        const storedProjects = JSON.parse(localStorage.getItem('projects'));
+  const parseLS = () => {
+    const storedProjects = JSON.parse(localStorage.getItem('projects'));
 
-        return storedProjects;
-    }
-    
-    return {
-        updateLS,
-        parseLS
-    }
+    return storedProjects;
+  };
+
+  return {
+    updateLS,
+    parseLS,
+  };
 })();
 
-export {lS};
+export { lS };

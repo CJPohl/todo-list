@@ -1,11 +1,8 @@
-// TODO:
-// - localStorage
-
-import { staticEls } from "./elements";
-import { scripts } from "./script";
+import { staticEls } from './elements';
+import { scripts } from './script';
 
 window.onload = () => {
-    staticEls.initPage();
-    scripts.updatePArray();
-    scripts.renderContent();
-}
+  staticEls.initPage();
+  scripts.updatePArray();
+  scripts.renderContent();
+};
